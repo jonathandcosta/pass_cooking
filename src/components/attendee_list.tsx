@@ -24,6 +24,7 @@ export function AttendeeList() {
 
   // FUNÇÃO MANTER A ALTERAÇÃO DO INPUT (USANDO O ESTADO)
   const [search, setSearch] = useState('')
+  const [page, setpage] = useState('1')
 
   function onSearchInputChange(event: ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value)
@@ -49,7 +50,7 @@ export function AttendeeList() {
         <thead>
           <tr className='border-b border-white/10'>
             <TableHeader style={{ width: 48 }}>
-              <input className='size-4 bg-black/20 rounded border-white/10 accent-orange-400' type="checkbox" />
+              <input type="checkbox" />
             </TableHeader>
             <TableHeader>Código</TableHeader>
             <TableHeader>Participante</TableHeader>
@@ -61,10 +62,10 @@ export function AttendeeList() {
 
         {/* LINHAS */}
         <tbody>
-          {attendees.map((attendee) => {
+          {attendees.slice((page - 1) * 10, page * 10).map((attendee) => {
             return (
-              <TableRow key={attendee.id} className='border-b border-white/10 hover:bg-white/5'>
-                <TableCell ><input className='size-4 bg-black/20 rounded border-white/10 accent-orange-400' type="checkbox" /></TableCell>
+              <TableRow key={attendee.id} >
+                <TableCell ><input type="checkbox" /></TableCell>
                 <TableCell>{attendee.id}</TableCell>
                 <TableCell>
                   <div className='flex flex-col gap-1'>
@@ -87,10 +88,10 @@ export function AttendeeList() {
         {/* RODAPÉ */}
         <tfoot>
           <TableRow>
-            <TableCell colSpan={3}>Mostrando 10 de 228 itens</TableCell>
+            <TableCell colSpan={3}>Mostrando 10 de {attendees.length} itens</TableCell>
             <td className="py-3 px-4 text-sm text-zinc-300 text-right" colSpan={3}>
               <div className='inline-flex items-center gap-8'>
-                <span>Página 1 de 23</span>
+                <span>Página {page} de {Math.ceil(attendees.length / 10)}</span>
                 <div className='flex gap-1.5'>
                   <IconButton>
                     <ChevronsLeft className='size-4' />
