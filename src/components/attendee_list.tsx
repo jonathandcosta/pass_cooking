@@ -22,26 +22,28 @@ dayjs.locale('pt-br')
 
 export function AttendeeList() {
 
-  // FUNÇÃO MANTER A ALTERAÇÃO DO INPUT (USANDO O ESTADO)
-  const [search, setSearch] = useState('')
-  const [page, setpage] = useState('1')
+  const [search, setSearch] = useState('') // FUNÇÃO MANTER A ALTERAÇÃO DO INPUT (USANDO O ESTADO)
+  const [page, setpage] = useState(1) // FUNÇÃO PARA A PAGINAÇÃO (USANDO O ESTADO)
 
-  const totalPages = Math.ceil(attendees.length / 10)
+  const totalPages = Math.ceil(attendees.length / 10) // CALCULAR O TOTAL DA PAGINAS
 
   function onSearchInputChange(event: ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value)
   }
-  ////>>>>>>>> --------------------------->>>>>>>/////
 
+  // BOTÕES PARA NAVEGAR NA PAGINAÇÃO
   function goToFirstPage() {
     setpage(1)
   }
+
   function goToLastPage() {
     setpage(totalPages)
   }
+
   function goToPreviousPage() {
     setpage(page - 1)
   }
+
   function goToNextPage() {
     setpage(page + 1)
   }
