@@ -1,20 +1,37 @@
-// ícones importados
-import { Search, MoreHorizontal, ChevronsLeft, ChevronLeft, ChevronsRight, ChevronRight } from 'lucide-react'
+
+import { ChangeEvent, useState } from 'react'
+
+// COMPONENTES
 import { IconButton } from './icon_button'
 import { Table } from './table'
 import { TableHeader } from './table-header'
 import { TableCell } from './table-cell'
 import { TableRow } from './table-row'
 
+// ícones importados
+import { Search, MoreHorizontal, ChevronsLeft, ChevronLeft, ChevronsRight, ChevronRight } from 'lucide-react'
+
+
 export function AttendeeList() {
+
+  // FUNÇÃO MANTER A ALTERAÇÃO DO INPUT (USANDO O ESTADO)
+  const [search, setSearch] = useState('')
+
+  function onSearchInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setSearch(event.target.value)
+  }
+  ////>>>>>>>> --------------------------->>>>>>>/////
+
   return (
     <div className='flex flex-col gap-4'>
       <div className="flex items-center gap-3">
         <h1 className="text-2xl font-bold">Participantes</h1>
         <div className="px-3 w-72 py-1.5 border border-white/10 rounded-lg text-sm flex items-center gap-3">
           <Search className='size-4 text-orange-600' />
-          <input className="bg-transparent flex-1 outline-none border-0 p-0" placeholder="Buscar participante..." />
+          <input onChange={onSearchInputChange} className="bg-transparent flex-1 outline-none border-0 p-0" placeholder="Buscar participante..." />
         </div>
+
+        {search}
       </div>
 
       {/* TABELA */}
