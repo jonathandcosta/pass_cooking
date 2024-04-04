@@ -11,6 +11,14 @@ import { TableRow } from './table-row'
 // ícones importados
 import { Search, MoreHorizontal, ChevronsLeft, ChevronLeft, ChevronsRight, ChevronRight } from 'lucide-react'
 
+import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import { attendees } from '../data/attendees'
+
+dayjs.extend(relativeTime)
+dayjs.locale('pt-br')
+
 
 export function AttendeeList() {
 
@@ -53,23 +61,27 @@ export function AttendeeList() {
 
         {/* LINHAS */}
         <tbody>
-          <tr className='border-b border-white/10 hover:bg-white/5'>
-            <TableCell ><input className='size-4 bg-black/20 rounded border-white/10 accent-orange-400' type="checkbox" /></TableCell>
-            <TableCell>152489</TableCell>
-            <TableCell>
-              <div className='flex flex-col gap-1'>
-                <span className='font-semibold text-white'>Jonathan Costa</span>
-                <span>teste@teste.com</span>
-              </div>
-            </TableCell>
-            <TableCell>7 dias atrás</TableCell>
-            <TableCell>2 dias atrás</TableCell>
-            <TableCell>
-              <IconButton transparent={true}>
-                <MoreHorizontal className='size-4' />
-              </IconButton>
-            </TableCell>
-          </tr>
+          {attendees.map((attendee) => {
+            return (
+              <TableRow key={attendee.id} className='border-b border-white/10 hover:bg-white/5'>
+                <TableCell ><input className='size-4 bg-black/20 rounded border-white/10 accent-orange-400' type="checkbox" /></TableCell>
+                <TableCell>{attendee.id}</TableCell>
+                <TableCell>
+                  <div className='flex flex-col gap-1'>
+                    <span className='font-semibold text-white'>{attendee.name}</span>
+                    <span>{attendee.email}</span>
+                  </div>
+                </TableCell>
+                <TableCell>{dayjs().to(attendee.createAt)}</TableCell>
+                <TableCell>{dayjs().to(attendee.chekedInAt)}</TableCell>
+                <TableCell>
+                  <IconButton transparent={true}>
+                    <MoreHorizontal className='size-4' />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </tbody>
 
         {/* RODAPÉ */}
